@@ -4,7 +4,7 @@ import os
 import random
 from django.db.models import Q
 
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 from .utils import unique_slug_generator
 from django.db.models.signals import pre_save
@@ -50,7 +50,7 @@ class Post(models.Model):
     active=models.BooleanField(default=False)
     time = models.DateTimeField(auto_now_add=True)
     publisher = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
-    count=models.IntegerField(default=1)
+    count=models.IntegerField(default=1,validators=[MaxValueValidator(10)])
 
     my_tags=models.ManyToManyField(Tag,blank=True)
     objects=PostManager()
