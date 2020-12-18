@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 from django.http import Http404
 from django.shortcuts import render, redirect
+from . import models
 
 
 # Create your views here.
@@ -39,3 +40,18 @@ def login_page(request):
 def log_out(request):
     logout(request)
     return redirect("/")
+
+
+
+
+def profile(request):
+    username=request.user.username
+    user=User.objects.get(username=username)
+    profile=models.UserPhoto.objects.get(user=user)
+
+
+
+    context={
+        "profile":profile
+    }
+    return render(request, "account_sys/profile.html", context)
