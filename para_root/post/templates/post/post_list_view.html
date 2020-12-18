@@ -1,0 +1,35 @@
+{% extends "shared/base.html" %}
+
+{% block  title %}
+    <title>{{ post.title }}</title>
+{%  endblock  %}
+{% block  content %}
+    <div class="container">
+    {% for post in posts %}
+
+<div class="bg-success " >
+
+            <div class="bg-info">{{ post.title }} </div>
+  {% if post.image %}       <img src="{{ post.image.url }}" alt="" style="width: 150px;height: 150px" >{% endif %}
+        <div >{{ post.body | truncatewords:10 }} </div>
+        <div > {{ post.time | timesince}} </div>
+        <div >{{ post.time | date}} </div>
+        <div > publisher: {{ post.publisher  }} </div>
+
+
+    <br>
+        <a href="{% url "post:detail" slug=post.slug %}"class="btn-danger"> read more</a>
+
+
+
+
+
+
+
+
+    </div>
+    {% endfor %}
+
+
+    </div>
+{%  endblock  %}

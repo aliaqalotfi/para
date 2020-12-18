@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #####################my apps
     'account_sys',
+    'post',
+    'my_tag',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,26 @@
+{% extends "shared/base.html" %}
+
+{% block  title %}
+    <title>{{ title }}</title>
+{%  endblock  %}
+
+
+
+{% block  content %}
+    <div class="container">
+<div> are sure you want to delete {{ post.title }}</div>
+<form  method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div hidden> {{ form }}</div>
+    <input type="submit" value="yes" class="btn btn-danger">
+    <a href="{% url 'post:list' %}" class="btn-info btn"> no</a>
+
+
+
+
+</form>
+
+
+    </div>
+
+{%  endblock  %}

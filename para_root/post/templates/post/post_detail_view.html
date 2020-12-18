@@ -1,0 +1,38 @@
+{% extends "shared/base.html" %}
+
+{% block  title %}
+    <title>{{ title }}</title>
+{%  endblock  %}
+{% block  content %}
+    <div class="container">
+    {% for item in post %}
+    <div class="bg-success">
+        <div class="bg-secondary">{{ item.title }} </div>
+       {% if item.image %}  <img src="{{ item.image.url }}" alt="" style="width: 150px;height: 150px" >{% endif %}
+        <div>{{ item.body  }} </div>
+        <div>{{ item.time | timesince}} </div>
+        <div>{{ item.time | date}} </div>
+        <div> publisher: {{ item.publisher  }} </div>
+{#    {% for tagss in item.my_tags %}#}
+{#        taggs#}
+{#    {% endfor %}#}
+
+        <a href="{% url 'post:edit' pk=item.pk %}" class="btn-info btn"> edit</a>
+        <a href="{% url 'post:delete' pk=item.pk %}" class="btn-danger btn"> delete</a>
+
+
+
+    </div>
+    {% endfor %}
+{#    برای برچسب ها#}
+    <div>
+    <p> برچسب ها</p>
+    {% for tags in tags_to_page %}
+        <a href="{% url 'post:tag' slug=tags.slug   %}">{{ tags }}</a>
+    {% endfor %}
+
+    </div>
+    </div>
+
+
+{%  endblock  %}
