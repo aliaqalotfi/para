@@ -48,13 +48,25 @@ def log_out(request):
 def profile(request):
     username=request.user.username
     user=User.objects.get(username=username)
-    profile=models.UserPhoto.objects.get(user=user)
+    profile=models.UserPhoto.objects.filter(user=user).exists()
+    if profile:
+
+        userphoto= models.UserPhoto.objects.filter(user=user).first()
+
+        aks=userphoto.profile_photo
+        if aks is not None:
+            context = {
+                "aks": aks
+            }
+    else:
+        context={
+
+            }
 
 
 
-    context={
-        "profile":profile
-    }
+
+
     return render(request, "account_sys/profile.html", context)
 
 
@@ -81,3 +93,24 @@ def change_password(request):
 
     context={}
     return render(request, "account_sys/change_password.html", context)
+
+
+
+
+def profile_photo(request):
+    if request.method=="POST":
+        aks=request.FILES.get("photo")
+        user=request.user
+        userphoto=models.UserPhoto.objects.filter(user=user).exists()
+        if userphoto:
+            main_class=models.UserPhoto.objects.get(user=user)
+            main_class.profile_photo=aks
+            main_class.save()
+        else:
+            models.UserPhoto.objects.create(user=user,profile_photo=aks)
+
+
+
+
+    context={}
+    return render(request, "account_sys/change_profile_photo.html", context)

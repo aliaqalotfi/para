@@ -1,0 +1,33 @@
+{% extends "shared/base.html" %}
+
+{% block  title %}
+    <title>{{ title }}</title>
+{%  endblock  %}
+{% block  content %}
+<div class="container">
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="file" name="photo">
+        <br>
+
+        <br>
+        <input type="submit" value="set">
+
+
+
+
+    </form>
+
+
+
+
+
+
+
+</div>
+
+
+
+{%  endblock  %}
