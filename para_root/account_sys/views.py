@@ -3,6 +3,7 @@ from django.contrib.auth import login,logout,authenticate
 from django.http import Http404
 from django.shortcuts import render, redirect
 from . import models
+from django.contrib.auth.hashers import make_password,check_password
 
 
 # Create your views here.
@@ -55,3 +56,28 @@ def profile(request):
         "profile":profile
     }
     return render(request, "account_sys/profile.html", context)
+
+
+
+
+
+
+def change_password(request):
+    req_user=request.user.username
+    user=User.objects.get(username=req_user)
+    user_main_password=user.password
+    if request.method=="POST":
+        old_password=request.POST.get("your_old_password")
+        new_password=request.POST.get("your_new_password")
+        confirm_new_password=request.POST.get("confirm")
+        check=check_password(old_password,user_main_password)
+        is_eq=new_password==confirm_new_password
+
+        if (check) and (is_eq):
+            new_hashed=make_password(new_password)
+            user.password=new_hashed
+            user.save()
+        else:raise Http404("something wentwrong")
+
+    context={}
+    return render(request, "account_sys/change_password.html", context)
