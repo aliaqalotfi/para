@@ -4,4 +4,5 @@ app_name="account_sys"
 urlpatterns = [
 
     path('register', views.register_page,name="register"),
+    path('login', views.login_page,name="login"),
 ]
